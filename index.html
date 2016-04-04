@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script>
+      $(document).ready(function(){
+
+      var animal = prompt("What type of pets do you like? (please keep answer singular)")
+
+      var image = '<img src="http://epi.bbb.org/globalassets/local-bbbs/tyler-tx-74/media/news_center_article_images/cairns-pet-care2-e1354247547298.jpg"/>';
+      $(".image").append(image);
+
+
+      /*$.getJSON("http://api.giphy.com/v1/gifs/search?q=funny+" + animal + "&api_key=dc6zaTOxFJmzC", function(response){
+        console.log(response.data[0].images.fixed_height.url);
+
+        var image = '<img src="'+response.data[0].images.fixed_height.url+'"/>';
+
+        $("#image").append(image);
+        }
+      });*/
+
+      $.getJSON("http://cooper-union-search-proxy.herokuapp.com/twitter/search/" + "ilove" + animal + "s?count=100", function(response){
+        console.log(response.statuses[0].user.profile_image_url);
+
+
+        $(".animalloverstitle").append("the " + animal + " lovers in manhattan right now!");
+
+        $(".animallovers").append("<img src=" + response.statuses[0].user.profile_image_url + ">");
+
+        for (var i = 1; i <=100; i ++ ) {
+
+        $(".animallovers").append("<img src=" + response.statuses[i].user.profile_image_url + ">");
+        }
+
+        });
+
+
+      $.getJSON("http://cooper-union-search-proxy.herokuapp.com/twitter/search/" + animal + "adoption?count=20", function(response){
+          console.log(response.statuses[0].text);
+
+
+        $(".adoptiontitle").append("adopt a " + animal + " now!");
+
+        $(".adoption").append("<img src=" + response.statuses[0].user.profile_image_url + ">");
+
+        for (var i = 1; i <=50; i ++ ) {
+
+        $(".adoption").append("<img src=" + response.statuses[i].user.profile_image_url + ">");
+        }
+
+        });
+
+
+
+        $(".animalloverstitle").click(function(){
+            $(".animallovers").toggleClass ('show','hide')
+          });
+
+
+          $(".adoptiontitle").click(function(){
+            $(".adoption").toggleClass ('show','hide');
+          });
+          });
+      </script>
+      <style>
+      #image {
+        width: 1235px;
+      }
+      .image {
+        margin: auto;
+        width: 1235px;
+        margin-top:-100px;
+      }
+
+      .animalloverstitle, .adoptiontitle {
+        display: block;
+        font-family: serif;
+        font-size: 50px;
+        border-top: 100px;
+        border-bottom: 20px;
+        font-style: italic;
+        text-decoration: underline;
+        margin: auto;
+      }
+
+      .animalloverstitle {
+        width: 1235px;
+        text-align: center;
+      }
+
+      .adoptiontitle {
+        width: 1235px;
+        text-align: center;
+      }
+
+      .animallovers {
+        display: none;
+      }
+
+      .adoption {
+        display: none;
+      }
+
+      #animallovers {
+        width: 1235px;
+      }
+
+      #adoption {
+        width: 1235px;
+      }
+
+      .show {
+        display:block;
+        margin: auto;
+        width: 481px;
+      }
+
+      .hide {
+        display:none;
+      }
+
+      </style>
+  </head>
+  <body>
+    <div id=image>
+      <section class="image"></section>
+    </div>
+
+    <div id=animallovers>
+      <section class="animalloverstitle"></section>
+      <section class="animallovers"></section>
+    </div>
+
+    <div id=adoption>
+      <section class="adoptiontitle"></section>
+      <section class="adoption"></section>
+    </div>
+
+
+
+  </body>
+</html>
